@@ -1,0 +1,38 @@
+image:
+  file: Dockerfile
+
+ports:
+  - port: 4000
+    onOpen: open-preview
+tasks:
+  - name: setup website
+    before: |
+      bundle config set --local path 'vendor/bundle'
+    init: |
+      cd /workspace/humandigitales/docs
+      bundle update
+      bundle install
+    command: |
+      cd /workspace/humandigitales/docs
+      bundle exec jekyll serve --host=0.0.0.0 --livereload
+
+github:
+  prebuilds:
+    # enable for the master/default branch (defaults to true)
+    master: true
+    # enable for all branches in this repo (defaults to false)
+    branches: false
+    # enable for pull requests coming from this repo (defaults to true)
+    pullRequests: true
+    # add a check to pull requests (defaults to true)
+    addCheck: true
+    # add a "Review in Gitpod" button as a comment to pull requests (defaults to false)
+    addComment: false
+    
+vscode:
+  extensions:
+    - zerodind.familiar-java-themes
+    - GitHub.vscode-pull-request-github
+    - jebbs.plantuml
+    - zaaack.markdown-editor
+    - eamodio.gitlens
